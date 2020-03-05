@@ -1,2 +1,2 @@
 rootProject.name='Heritage'
-include ':app'
+include ':app', ':core'

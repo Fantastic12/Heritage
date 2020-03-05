@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/legacy_nav_graph"
+    app:startDestination="@id/listPersonFomHeritageFragment">
+
+    <fragment
+        android:id="@+id/listPersonFomHeritageFragment"
+        android:name="com.anzid.heritage.list.ListPersonFomHeritageFragment"
+        android:label="list_person_fom_haritage_fragment"
+        tools:layout="@layout/list_person_fom_haritage_fragment">
+        <action
+            android:id="@+id/action_list_to_addInHeritageFragment"
+            app:destination="@id/addInHeritageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addInHeritageFragment"
+        android:name="com.anzid.heritage.addInHeritage.AddInHeritageFragment"
+        android:label="add_in_heritage_fragment"
+        tools:layout="@layout/add_in_heritage_fragment" />
+</navigation>
