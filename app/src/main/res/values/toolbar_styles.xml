@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AddInHeritageToolBarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/colorWhite</item>
+        <item name="android:title">@string/title_add_to_heritage_toolbar</item>
+        <item name="android:navigationIcon">@drawable/ic_arrow_back</item>
+    </style>
+</resources>

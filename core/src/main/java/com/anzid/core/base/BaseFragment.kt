@@ -5,24 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import dagger.android.support.DaggerFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-abstract class BaseFragment<VM : BaseViewModel> : DaggerFragment(), CoroutineScope {
+abstract class BaseFragment<VM : ViewModel> : Fragment(), CoroutineScope {
 
     @get: LayoutRes
     protected abstract val fragmentLayout: Int
 
-    @Inject
-    protected lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    protected val viewModel: VM by lazy { ViewModelProviders.of(this, viewModelFactory)[getViewModelClass()] }
+    protected open val viewModel: VM by lazy { ViewModelProvider(this)[getViewModelClass()] }
 
     protected lateinit var job: Job
     override val coroutineContext: CoroutineContext
@@ -32,7 +28,6 @@ abstract class BaseFragment<VM : BaseViewModel> : DaggerFragment(), CoroutineSco
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lifecycle.addObserver(viewModel)
         job = Job()
     }
 

@@ -7,11 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.anzid.core.ResourceProvider
 import javax.inject.Inject
 
-/**
- * Created by Nazariy Yatsuk on 17.07.2019.
- * Copyright (c) 2019 ANZID Company. All rights reserved.
- */
-
 abstract class BaseViewModel : ViewModel(), LifecycleObserver {
 
     @Inject

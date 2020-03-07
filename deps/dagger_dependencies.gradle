@@ -1,0 +1,7 @@
+dependencies {
+    implementation dagger.runtime
+    implementation dagger.android
+    implementation dagger.android_support
+    kapt dagger.compiler
+    kapt dagger.android_support_compiler
+}

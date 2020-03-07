@@ -1,29 +1,64 @@
 package com.anzid.heritage.addInHeritage
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import android.view.View.*
+import androidx.navigation.fragment.findNavController
+import com.anzid.core.base.BaseFragment
 import com.anzid.heritage.R
+import com.anzid.heritage.hideOrShowMainToolbar
+import com.google.android.material.snackbar.Snackbar
+import com.polyak.iconswitch.IconSwitch
+import kotlinx.android.synthetic.main.add_in_heritage_fragment.*
 
-class AddInHeritageFragment : Fragment() {
+class AddInHeritageFragment : BaseFragment<AddInHeritageViewModel>() {
 
-    companion object {
-        fun newInstance() = AddInHeritageFragment()
+    override val fragmentLayout = R.layout.add_in_heritage_fragment
+    override fun getViewModelClass() = AddInHeritageViewModel::class.java
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initToolbar()
     }
 
-    private lateinit var viewModel: AddInHeritageViewModel
+    override fun initListeners() {
+        add_in_heritage_toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
+        age_fluid_slider.beginTrackingListener = { select_age_text_view.visibility = INVISIBLE }
+        age_fluid_slider.endTrackingListener = { select_age_text_view.visibility = VISIBLE }
+        profile_avatar.setOnClickListener { showSelectProfileAvatarDialog() }
+        switch_die.setCheckedChangeListener { handleSwitchDie(it) }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.add_in_heritage_fragment, container, false)
+        add_in_heritage_toolbar.setOnMenuItemClickListener {
+            if (it.itemId == R.id.add_person) Snackbar.make(coordinator, "Is developing", Snackbar.LENGTH_LONG).show(); true
+        }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(AddInHeritageViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onDestroyView() {
+        super.onDestroyView()
+        requireActivity().hideOrShowMainToolbar(true)
     }
 
+    private fun initToolbar() {
+        requireActivity().hideOrShowMainToolbar(false)
+        add_in_heritage_toolbar.inflateMenu(R.menu.add_to_heritage_menu)
+        add_in_heritage_toolbar.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+    }
+
+    private fun handleSwitchDie(current: IconSwitch.Checked) {
+        if (current == IconSwitch.Checked.RIGHT) {
+            rip_button.visibility = VISIBLE
+            date_died_container.visibility = VISIBLE
+            age_container.visibility = GONE
+            container.setBackgroundColor(resources.getColor(R.color.colorBackgroundDark))
+        } else {
+            rip_button.visibility = INVISIBLE
+            date_died_container.visibility = INVISIBLE
+            age_container.visibility = VISIBLE
+            container.setBackgroundColor(resources.getColor(R.color.colorBackgroundLight))
+        }
+    }
+
+    private fun showSelectProfileAvatarDialog() {
+        Snackbar.make(coordinator, "Is developing", Snackbar.LENGTH_LONG).show()
+    }
 }

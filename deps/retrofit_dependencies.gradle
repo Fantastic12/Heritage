@@ -1,0 +1,6 @@
+dependencies {
+    implementation retrofit.retrofit2
+    implementation retrofit.converter_gson
+    implementation retrofit.converter_moshi
+    implementation retrofit.coroutines_adapter
+}

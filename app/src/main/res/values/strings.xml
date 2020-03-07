@@ -1,4 +1,16 @@
 <resources>
-    <string name="app_name">Heritage</string>
+    <string name="app_name" translatable="false">Heritage</string>
     <string name="title_item_detail">Item Detail</string>
+
+    <string name="title_add_to_heritage_toolbar">Add to heritage</string>
+
+
+    <string name="please_select_gender">Please select gender our relative</string>
+    <string name="please_select_age">Please select age for our relative</string>
+    <string name="gender_male">Male</string>
+    <string name="gender_female">Female</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_surname">Surname</string>
+    <string name="please_select_date_birthday">Please select birthday our relative</string>
+    <string name="apply">Apply</string>
 </resources>

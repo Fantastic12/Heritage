@@ -6,15 +6,15 @@ apply from: rootProject.file('deps/shared_dependencies.gradle')
 apply from: rootProject.file('deps/test_dependencies.gradle')
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion compileSdk
+    buildToolsVersion buildTools
 
     defaultConfig {
-        applicationId "com.anzid.heritage"
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        applicationId appId
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
+        versionCode canonicalVersionCode
+        versionName canonicalVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -36,17 +36,23 @@ android {
 dependencies {
     implementation project(':core')
 
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation androidx.app_compat
+    implementation androidx.constraintlayout
+    implementation androidx.recyclerview
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0'
 
-    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation android_dependency.material
+    implementation android_dependency.design
 
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation navigation.fragment_ktx
+    implementation navigation.ui_ktx
 
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.1'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation libs.circle_imageview
+    implementation libs.fluid_slider
+    implementation libs.sticky_switch
+
+    implementation 'com.polyak:icon-switch:1.0.0'
+    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+
 }

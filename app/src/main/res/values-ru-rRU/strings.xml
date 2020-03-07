@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_item_detail">Item Detail</string>
+    <string name="please_select_gender">Пожалуйста, выберите пол вашего родственника</string>
+    <string name="please_select_age">Укажите пожалуйста возвраст вашего предка</string>
+    <string name="gender_male">Мужчина</string>
+    <string name="gender_female">Женщина</string>
+    <string name="hint_name">Имя</string>
+    <string name="hint_surname">Фамилия</string>
+    <string name="please_select_date_birthday">Пожалуйста выберете дату рождения вашего родствинника</string>
+    <string name="title_add_to_heritage_toolbar">Добавить в родословную</string>
+    <string name="apply">Применить</string>
+
+</resources>
