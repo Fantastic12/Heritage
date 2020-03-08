@@ -4,18 +4,10 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 apply from: rootProject.file('deps/shared_dependencies.gradle')
-apply from: rootProject.file('deps/dagger_dependencies.gradle')
-apply from: rootProject.file('deps/retrofit_dependencies.gradle')
-apply from: rootProject.file('deps/test_dependencies.gradle')
-
-kapt {
-    generateStubs = true
-}
 
 android {
     compileSdkVersion compileSdk
     buildToolsVersion buildTools
-
 
     defaultConfig {
         minSdkVersion minSdk
@@ -24,7 +16,6 @@ android {
         versionName canonicalVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
@@ -38,15 +29,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
 }
 
 dependencies {
-    // Glide
-    implementation glide.glide
-    kapt glide.compiler
-
-    // Room
-    implementation room.runtime
-    implementation room.ktx
-    kapt room.compiler
+    implementation androidx.app_compat
 }

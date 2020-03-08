@@ -6,7 +6,7 @@ import android.view.View.*
 import androidx.navigation.fragment.findNavController
 import com.anzid.core.base.BaseFragment
 import com.anzid.heritage.R
-import com.anzid.heritage.hideOrShowMainToolbar
+import com.anzid.heritage.extensions.hideOrShowMainToolbar
 import com.google.android.material.snackbar.Snackbar
 import com.polyak.iconswitch.IconSwitch
 import kotlinx.android.synthetic.main.add_in_heritage_fragment.*
@@ -44,18 +44,23 @@ class AddInHeritageFragment : BaseFragment<AddInHeritageViewModel>() {
         add_in_heritage_toolbar.setBackgroundColor(resources.getColor(R.color.colorPrimary))
     }
 
-    private fun handleSwitchDie(current: IconSwitch.Checked) {
-        if (current == IconSwitch.Checked.RIGHT) {
-            rip_button.visibility = VISIBLE
-            date_died_container.visibility = VISIBLE
-            age_container.visibility = GONE
-            container.setBackgroundColor(resources.getColor(R.color.colorBackgroundDark))
-        } else {
-            rip_button.visibility = INVISIBLE
-            date_died_container.visibility = INVISIBLE
-            age_container.visibility = VISIBLE
-            container.setBackgroundColor(resources.getColor(R.color.colorBackgroundLight))
-        }
+    private fun handleSwitchDie(current: IconSwitch.Checked) = when (current) {
+        IconSwitch.Checked.RIGHT -> handleRightSwitchState()
+        IconSwitch.Checked.LEFT -> handleLeftSwitchState()
+    }
+
+    private fun handleRightSwitchState() {
+        rip_button.visibility = VISIBLE
+        date_died_container.visibility = VISIBLE
+        age_container.visibility = GONE
+        container.setBackgroundColor(resources.getColor(R.color.colorBackgroundDark))
+    }
+
+    private fun handleLeftSwitchState() {
+        rip_button.visibility = INVISIBLE
+        date_died_container.visibility = INVISIBLE
+        age_container.visibility = VISIBLE
+        container.setBackgroundColor(resources.getColor(R.color.colorBackgroundLight))
     }
 
     private fun showSelectProfileAvatarDialog() {

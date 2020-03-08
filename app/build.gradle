@@ -43,7 +43,9 @@ dependencies {
     implementation androidx.recyclerview
     kapt androidx.annotations
 
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    // Glide
+    implementation glide.glide
+    kapt glide.compiler
 
     implementation android_dependency.material
     implementation android_dependency.design
@@ -55,6 +57,8 @@ dependencies {
     implementation libs.fluid_slider
     implementation libs.sticky_switch
 
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.polyak:icon-switch:1.0.0'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
 

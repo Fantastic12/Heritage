@@ -1,2 +1,3 @@
 rootProject.name='Heritage'
 include ':app', ':core'
+include ':utils'

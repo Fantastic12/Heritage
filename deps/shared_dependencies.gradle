@@ -1,6 +1,7 @@
 dependencies {
     implementation kotlin_dependency.stdlib
     implementation androidx.core_ktx
+    kapt androidx.annotations
 
     implementation lifecycle.extensions
     implementation lifecycle.viewmodel_ktx

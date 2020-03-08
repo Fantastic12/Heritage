@@ -1,5 +1,6 @@
 package com.anzid.heritage.di
 
+import com.anzid.core.di.CoreComponent
 import com.anzid.heritage.HeritageApp
 import com.anzid.heritage.di.module.AppActivityModule
 import com.anzid.heritage.di.module.AppModule
@@ -14,7 +15,7 @@ import dagger.android.AndroidInjector
         AndroidInjectionModule::class,
         AppModule::class,
         AppActivityModule::class
-    ]
+    ], dependencies = [CoreComponent::class]
 )
 interface AppComponent : AndroidInjector<HeritageApp> {
 
@@ -22,8 +23,7 @@ interface AppComponent : AndroidInjector<HeritageApp> {
     interface Builder {
         @BindsInstance
         fun application(application: HeritageApp): Builder
-
+        fun initCoreComponent(component: CoreComponent): Builder
         fun build(): AppComponent
     }
-
 }

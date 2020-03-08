@@ -1,5 +1,6 @@
 package com.anzid.heritage.di
 
+import com.anzid.core.di.CoreInjector
 import com.anzid.heritage.HeritageApp
 
 object AppInjector {
@@ -11,6 +12,7 @@ object AppInjector {
             appComponent = DaggerAppComponent
                 .builder()
                 .application(app)
+                .initCoreComponent(CoreInjector.provideAppComponent(app))
                 .build()
         }
 

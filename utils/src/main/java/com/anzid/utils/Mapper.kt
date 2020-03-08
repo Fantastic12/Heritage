@@ -1,4 +1,4 @@
-package com.anzid.core
+package com.anzid.utils
 
 interface Mapper<E, M> {
 
