@@ -1,7 +1,9 @@
 package com.anzid.heritage.addInHeritage
 
-import androidx.lifecycle.ViewModel
+import com.anzid.core.base.BaseViewModel
+import com.anzid.heritage.repository.HeritageRepository
+import javax.inject.Inject
 
-class AddInHeritageViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class AddInHeritageViewModel @Inject constructor(private val heritageRepository: HeritageRepository) : BaseViewModel() {
+
 }

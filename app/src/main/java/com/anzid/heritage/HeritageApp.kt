@@ -1,22 +1,12 @@
 package com.anzid.heritage
 
-import android.app.Application
 import com.anzid.heritage.di.AppInjector
 import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import javax.inject.Inject
+import dagger.android.support.DaggerApplication
 
-class HeritageApp : Application(), HasAndroidInjector {
+class HeritageApp : DaggerApplication() {
 
-    @Volatile
-    @Inject
-    lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Any>
-
-    override fun androidInjector(): AndroidInjector<Any> = dispatchingActivityInjector
-
-    override fun onCreate() {
-        super.onCreate()
-        AppInjector.provideAppComponent(this)
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return AppInjector.provideAppComponent(this)
     }
 }

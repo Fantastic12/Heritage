@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.anzid.heritage.R
-import com.anzid.heritage.dummy.DummyContent
 import kotlinx.android.synthetic.main.list_person_fom_haritage_fragment.*
 
 class ListPersonFomHeritageFragment : Fragment() {
@@ -41,6 +40,6 @@ class ListPersonFomHeritageFragment : Fragment() {
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
-        recyclerView.adapter = PersonListRecyclerViewAdapter(DummyContent.ITEMS)
+        recyclerView.adapter = PersonListRecyclerViewAdapter()
     }
 }

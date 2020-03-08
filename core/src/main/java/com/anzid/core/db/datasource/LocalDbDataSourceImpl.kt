@@ -4,7 +4,7 @@ import com.anzid.core.db.HeritageDb
 import com.anzid.core.db.PersonEntity
 import javax.inject.Inject
 
-class LocalDbDataSourceImpl @Inject constructor(heritageDb: HeritageDb) : LocalDbDataSource {
+internal class LocalDbDataSourceImpl @Inject constructor(heritageDb: HeritageDb) : LocalDbDataSource {
 
     private var personDao = heritageDb.personDao()
 

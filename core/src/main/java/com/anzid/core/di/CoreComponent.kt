@@ -1,6 +1,7 @@
 package com.anzid.core.di
 
 import android.app.Application
+import com.anzid.core.db.datasource.LocalDbDataSource
 import com.anzid.core.di.module.DataSourceModule
 import com.anzid.core.di.module.DbModule
 import dagger.BindsInstance
@@ -25,5 +26,7 @@ interface CoreComponent : AndroidInjector<Application> {
 
         fun build(): CoreComponent
     }
+
+    fun getLocalDbDataSource(): LocalDbDataSource
 
 }

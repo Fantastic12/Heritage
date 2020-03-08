@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.*
 import androidx.navigation.fragment.findNavController
-import com.anzid.core.base.BaseFragment
+import com.anzid.core.base.FragmentViewModelInjection
 import com.anzid.heritage.R
 import com.anzid.heritage.extensions.hideOrShowMainToolbar
 import com.google.android.material.snackbar.Snackbar
 import com.polyak.iconswitch.IconSwitch
 import kotlinx.android.synthetic.main.add_in_heritage_fragment.*
 
-class AddInHeritageFragment : BaseFragment<AddInHeritageViewModel>() {
+class AddInHeritageFragment : FragmentViewModelInjection<AddInHeritageViewModel>() {
 
     override val fragmentLayout = R.layout.add_in_heritage_fragment
     override fun getViewModelClass() = AddInHeritageViewModel::class.java
