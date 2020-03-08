@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Heritage</string>
+    <string name="app_heritage_name" translatable="false">Heritage</string>
     <string name="title_item_detail">Item Detail</string>
 
     <string name="title_add_to_heritage_toolbar">Add to heritage</string>
