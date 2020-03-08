@@ -12,5 +12,6 @@
     <string name="hint_name">Name</string>
     <string name="hint_surname">Surname</string>
     <string name="please_select_date_birthday">Please select birthday our relative</string>
+    <string name="please_select_date_died">Please select died our relative</string>
     <string name="apply">Apply</string>
 </resources>
