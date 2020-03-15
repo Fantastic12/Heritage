@@ -6,7 +6,9 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.View.*
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.anzid.core.base.FragmentViewModelInjection
 import com.anzid.heritage.R
@@ -30,6 +32,10 @@ class AddInHeritageFragment : FragmentViewModelInjection<AddInHeritageViewModel>
         datePickerDialog = DatePickerDialog(requireContext())
         super.onViewCreated(view, savedInstanceState)
         initToolbar()
+    }
+
+    override fun initObservers() {
+        viewModel.showToast.observe(viewLifecycleOwner, Observer { Toast.makeText(context, it, Toast.LENGTH_LONG).show() })
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -89,6 +95,7 @@ class AddInHeritageFragment : FragmentViewModelInjection<AddInHeritageViewModel>
     }
 
     private fun showSelectProfileAvatarDialog() {
-        Snackbar.make(coordinator, "Is developing", Snackbar.LENGTH_LONG).show()
+//        Snackbar.make(coordinator, "Is developing", Snackbar.LENGTH_LONG).show()
+        viewModel.show()
     }
 }

@@ -1,3 +1,8 @@
 rootProject.name='Heritage'
 include ':app', ':core'
 include ':utils'
+
+// codogen
+include ':anzidannotation', ':anzidcodegeneration'
+project(":anzidannotation").projectDir = new File(rootDir, "codogen/anzidannotation")
+project(":anzidcodegeneration").projectDir = new File(rootDir, "codogen/anzidcodegeneration")

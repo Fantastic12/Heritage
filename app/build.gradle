@@ -38,6 +38,9 @@ android {
 dependencies {
     implementation project(':core')
 
+    implementation project(':anzidannotation')
+    kapt project(':anzidcodegeneration')
+
     implementation androidx.app_compat
     implementation androidx.constraintlayout
     implementation androidx.recyclerview
