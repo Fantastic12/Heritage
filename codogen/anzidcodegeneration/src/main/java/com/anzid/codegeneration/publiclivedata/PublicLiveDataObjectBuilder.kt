@@ -1,26 +1,21 @@
 package com.anzid.codegeneration.publiclivedata
 
-class PublicLiveDataObjectBuilder(
-    nameMember: String,
-    packageName: String,
-    className: String,
-    type: String
-) {
+class PublicLiveDataObjectBuilder(model: LiveDataGeneratorModel) {
 
-    private val publicLiveDataName = nameMember.removePrefix("_")
+    private val publicLiveDataName = model.fieldName.removePrefix("_")
     private val contentTemplate = """
-        package $packageName
+        package ${model.pack}
         
         import androidx.lifecycle.LiveData
 
         @Suppress("UNCHECKED_CAST")
-        val ${className}.${publicLiveDataName} : LiveData<${type}>
+        val ${model.className}.${publicLiveDataName} : LiveData<${model.typeParameterizedType}>
             get() {
-                 val lvPrivate = javaClass.getDeclaredField("$nameMember") 
+                 val lvPrivate = javaClass.getDeclaredField("${model.fieldName}") 
                  lvPrivate.isAccessible = true 
                  val lv = lvPrivate.get(this) 
                  
-                 return lv as LiveData<${type}>
+                 return lv as LiveData<${model.typeParameterizedType}>
             }
         
     """.trimIndent()

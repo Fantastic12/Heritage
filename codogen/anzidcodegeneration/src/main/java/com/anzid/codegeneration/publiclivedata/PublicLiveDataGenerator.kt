@@ -2,6 +2,7 @@ package com.anzid.codegeneration.publiclivedata
 
 import com.anzid.codegeneration.AnzidFileGenerator.Companion.KAPT_KOTLIN_GENERATED_OPTION_NAME
 import com.anzid.codegeneration.Generator
+import com.squareup.kotlinpoet.ClassName
 import java.io.File
 import javax.annotation.processing.ProcessingEnvironment
 import javax.lang.model.element.Element
@@ -10,6 +11,8 @@ class PublicLiveDataGenerator(private val processingEnv: ProcessingEnvironment) 
     companion object {
         const val FILE_NAME = "PublicLvContainer"
     }
+
+    private var lvGeneratorModels = mutableSetOf<LiveDataGeneratorModel>()
 
     override fun prepareClassInitialization(element: Element) {
         val fieldName = element.simpleName.toString()
@@ -25,26 +28,20 @@ class PublicLiveDataGenerator(private val processingEnv: ProcessingEnvironment) 
             else -> parameterizedType
         }
 
-        generateClass(fieldName, pack, enclosingElement, simpleParameterizableType)
+        lvGeneratorModels.add(LiveDataGeneratorModel(fieldName, pack, enclosingElement, simpleParameterizableType))
     }
 
-    private fun generateClass(fieldName: String, pack: String, className: String, typeParameterizedType: String) {
-        val fileContent = PublicLiveDataObjectBuilder(
-            fieldName,
-            pack,
-            className,
-            typeParameterizedType
-        ).getContent()
-
+    fun generateFile() {
         val kaptKotlinGeneratedDir = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME]
         val file = File(kaptKotlinGeneratedDir, "$FILE_NAME.kt")
 
-        file.writeText(fileContent)
+        lvGeneratorModels.forEach {
+            val fileContent = PublicLiveDataObjectBuilder(it).getContent()
+            file.writeText(fileContent)
+        }
     }
-
 
     enum class DataType(val kotlinType: kotlin.String) {
         Integer("Int"), String("String");
     }
-
 }
