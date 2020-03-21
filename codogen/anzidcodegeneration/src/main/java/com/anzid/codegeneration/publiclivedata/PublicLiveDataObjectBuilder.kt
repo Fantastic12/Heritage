@@ -3,11 +3,9 @@ package com.anzid.codegeneration.publiclivedata
 class PublicLiveDataObjectBuilder(model: LiveDataGeneratorModel) {
 
     private val publicLiveDataName = model.fieldName.removePrefix("_")
-    private val contentTemplate = """
-        package ${model.pack}
-        
-        import androidx.lifecycle.LiveData
 
+    private val additionalContentTemplate = """
+      
         @Suppress("UNCHECKED_CAST")
         val ${model.className}.${publicLiveDataName} : LiveData<${model.typeParameterizedType}>
             get() {
@@ -20,5 +18,14 @@ class PublicLiveDataObjectBuilder(model: LiveDataGeneratorModel) {
         
     """.trimIndent()
 
-    fun getContent() = contentTemplate
+    private val contentTemplate = """
+package ${model.pack}
+        
+import androidx.lifecycle.LiveData
+
+$additionalContentTemplate
+""".trimIndent()
+
+    fun getDefaultContent() = contentTemplate
+    fun getAdditionalContent() = additionalContentTemplate
 }

@@ -2,17 +2,18 @@ package com.anzid.codegeneration.publiclivedata
 
 import com.anzid.codegeneration.AnzidFileGenerator.Companion.KAPT_KOTLIN_GENERATED_OPTION_NAME
 import com.anzid.codegeneration.Generator
-import com.squareup.kotlinpoet.ClassName
 import java.io.File
 import javax.annotation.processing.ProcessingEnvironment
 import javax.lang.model.element.Element
 
-class PublicLiveDataGenerator(private val processingEnv: ProcessingEnvironment) : Generator {
+class PublicLiveDataGenerator(private val processingEnv: ProcessingEnvironment) : Generator() {
     companion object {
-        const val FILE_NAME = "PublicLvContainer"
+        const val END_FILE_NAME = "LvContainer"
     }
 
-    private var lvGeneratorModels = mutableSetOf<LiveDataGeneratorModel>()
+    private var liveDataMap = mutableMapOf<String, MutableSet<LiveDataGeneratorModel>>()
+
+    private var isFirstElement = true
 
     override fun prepareClassInitialization(element: Element) {
         val fieldName = element.simpleName.toString()
@@ -21,27 +22,53 @@ class PublicLiveDataGenerator(private val processingEnv: ProcessingEnvironment) 
         val enclosingElement = element.enclosingElement.simpleName.toString()
 
         val parameterizedType = typeLiveData.split('<').takeLast(1)[0].removeSuffix(">")
+        val parameterizedTypeClassName = parameterizedType.split(".").takeLast(1)[0]
 
-        val simpleParameterizableType = when {
-            parameterizedType.contains(DataType.Integer.name) -> DataType.Integer.kotlinType
-            parameterizedType.contains(DataType.String.name) -> DataType.Integer.kotlinType
-            else -> parameterizedType
+        val simpleParameterizableType = getSimpleParameterizableType(parameterizedType)
+
+        with(enclosingElement) {
+            if (liveDataMap.containsKey(this)) {
+                liveDataMap[this]?.add(LiveDataGeneratorModel(fieldName, pack, this@with, simpleParameterizableType))
+                return@with
+            }
+            liveDataMap[this] = mutableSetOf<LiveDataGeneratorModel>()
+                .apply { add(LiveDataGeneratorModel(fieldName, pack, this@with, simpleParameterizableType)) }
         }
-
-        lvGeneratorModels.add(LiveDataGeneratorModel(fieldName, pack, enclosingElement, simpleParameterizableType))
     }
 
     fun generateFile() {
         val kaptKotlinGeneratedDir = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME]
-        val file = File(kaptKotlinGeneratedDir, "$FILE_NAME.kt")
 
-        lvGeneratorModels.forEach {
-            val fileContent = PublicLiveDataObjectBuilder(it).getContent()
-            file.writeText(fileContent)
+        liveDataMap.forEach {
+            val file = File(kaptKotlinGeneratedDir, "${it.key}$END_FILE_NAME.kt")
+
+            it.value.forEach { model ->
+                if (isFirstElement) processFirstElementForWrite(file, model)
+                else processSubsequentElementForWrite(file, model)
+            }
+
+            isFirstElement = true
         }
     }
 
-    enum class DataType(val kotlinType: kotlin.String) {
-        Integer("Int"), String("String");
+    private fun getSimpleParameterizableType(parameterizedType: String) = when {
+        parameterizedType.contains(DataType.Object.name) -> DataType.Object.kotlinType
+        parameterizedType.contains(DataType.Integer.name) -> DataType.Integer.kotlinType
+        parameterizedType.contains(DataType.String.name) -> DataType.String.kotlinType
+        parameterizedType.contains(DataType.Boolean.name) -> DataType.Boolean.kotlinType
+        parameterizedType.contains(DataType.Long.name) -> DataType.Long.kotlinType
+        parameterizedType.contains(DataType.Float.name) -> DataType.Float.kotlinType
+        else -> parameterizedType
+    }
+
+    private fun processFirstElementForWrite(file: File, liveDataModel: LiveDataGeneratorModel) {
+        val defaultFileContent = PublicLiveDataObjectBuilder(liveDataModel).getDefaultContent()
+        file.appendText(defaultFileContent)
+        isFirstElement = false
+    }
+
+    private fun processSubsequentElementForWrite(file: File, liveDataModel: LiveDataGeneratorModel) {
+        val subsequentFileContent = PublicLiveDataObjectBuilder(liveDataModel).getAdditionalContent()
+        file.appendText(subsequentFileContent)
     }
 }

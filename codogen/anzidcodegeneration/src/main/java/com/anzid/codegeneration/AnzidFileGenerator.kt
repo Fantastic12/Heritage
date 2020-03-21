@@ -29,12 +29,12 @@ class AnzidFileGenerator : AbstractProcessor() {
             getElementsAnnotatedWith(ComponentInjector::class.java)
                 ?.forEach { ComponentInjectorGenerator(processingEnv).prepareClassInitialization(it) }
 
-            handlePublicLiveDataAnnotation(this)
+            processPublicLiveDataAnnotation(this)
         }
         return true
     }
 
-    private fun handlePublicLiveDataAnnotation(roundEnvironment: RoundEnvironment) {
+    private fun processPublicLiveDataAnnotation(roundEnvironment: RoundEnvironment) {
         val generator = PublicLiveDataGenerator(processingEnv)
 
         roundEnvironment.getElementsAnnotatedWith(PublicLiveData::class.java)
